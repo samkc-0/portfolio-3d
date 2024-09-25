@@ -1,4 +1,10 @@
-import { Environment, Float, OrbitControls, useGLTF } from '@react-three/drei'
+import {
+  Environment,
+  Float,
+  OrbitControls,
+  PresentationControls,
+  useGLTF,
+} from '@react-three/drei'
 import './Scene.css'
 
 function Scene(): JSX.Element {
@@ -7,10 +13,19 @@ function Scene(): JSX.Element {
     <>
       <Environment preset="forest" />
       <color args={['#214e34']} attach="background" />
-      <OrbitControls makeDefault />
-      <Float>
-        <primitive object={laptop.scene} position-y={-1.2} />
-      </Float>
+      {/* <OrbitControls makeDefault /> */}
+      <PresentationControls
+        global
+        rotation={[0.13, 0.1, 0]}
+        polar={[-0.4, 0.2] /* limit vertical rotation */}
+        azimuth={[-1, 0.75] /* limit horizontal rotation */}
+      >
+        <object3D name="laptop">
+          <Float rotationIntensity={0.4}>
+            <primitive object={laptop.scene} position-y={-1.2} />
+          </Float>
+        </object3D>
+      </PresentationControls>
     </>
   )
 }

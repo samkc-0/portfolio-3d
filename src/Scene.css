@@ -9,3 +9,7 @@ body,
   overflow: hidden;
   background: linear-gradient(#214e34, #9ea93f);
 }
+
+.r3f {
+  touch-action: none;
+}

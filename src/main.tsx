@@ -6,7 +6,7 @@ import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Canvas>
+    <Canvas className="r3f">
       <Scene />
     </Canvas>
   </StrictMode>
