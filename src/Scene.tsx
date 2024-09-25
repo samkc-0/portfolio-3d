@@ -7,11 +7,24 @@ import {
   useGLTF,
   Text,
 } from '@react-three/drei'
+import { Leva, useControls } from 'leva'
 import './Scene.css'
 
-function Scene(): JSX.Element {
+const LAPTOP_X = -0.7
+const LAPTOP_Y = -0.3
+const LAPTOP_Z = 1
+const LAPTOP_EULER_Y = 0.5
+
+function Scene({ debug = false }: { debug: boolean }): JSX.Element {
+  const controls = useControls('Laptop', {
+    laptopPosition: [LAPTOP_X, LAPTOP_Y, LAPTOP_Z],
+    laptopScale: 1,
+    laptopRotation: [0, LAPTOP_EULER_Y, 0],
+  })
+
   return (
     <>
+      {!debug && <Leva hidden />}
       <Environment preset="forest" />
       <color args={['#214e34']} attach="background" />
       {/* <OrbitControls makeDefault /> */}
@@ -24,8 +37,15 @@ function Scene(): JSX.Element {
         snap={{ mass: 2, tension: 400 }}
       >
         <Float rotationIntensity={0.4}>
-          <Text name="author-name">Sam Carter</Text>
-          <Laptop displayUrl="https://threejs.org/" scale={1.2} />
+          <Text name="author-name">SAMUEL CARTER</Text>
+          <Laptop
+            displayUrl="https://threejs.org/"
+            scale={debug ? controls.laptopScale : 1}
+            position={
+              debug ? controls.laptopPosition : [LAPTOP_X, LAPTOP_Y, LAPTOP_Z]
+            }
+            rotation={debug ? controls.laptopRotation : [0, LAPTOP_EULER_Y, 0]}
+          />
         </Float>
       </PresentationControls>
       {/* Laptop casts a shadow on the ground: */}
@@ -37,13 +57,22 @@ function Scene(): JSX.Element {
 function Laptop({
   displayUrl,
   scale = 1,
+  position = [0, 0, 0],
+  rotation = [0, 0, 0],
 }: {
   displayUrl: string
   scale?: number
+  position?: [number, number, number]
+  rotation?: [number, number, number]
 }): JSX.Element {
   const model = useGLTF('./models/laptop.gltf')
   return (
-    <object3D name="laptop" scale={scale}>
+    <object3D
+      name="laptop"
+      scale={scale}
+      position={position}
+      rotation={rotation}
+    >
       <rectAreaLight
         width={2.5}
         height={1.65}
