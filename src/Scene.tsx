@@ -20,6 +20,7 @@ function Scene(): JSX.Element {
         polar={[-0.4, 0.2] /* limit vertical rotation */}
         azimuth={[-1, 0.75] /* limit horizontal rotation */}
         config={{ mass: 2, tension: 400 }}
+        snap={{ mass: 2, tension: 400 }}
       >
         <object3D name="laptop">
           <Float rotationIntensity={0.4}>
