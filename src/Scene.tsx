@@ -3,7 +3,6 @@ import {
   Environment,
   Float,
   Html,
-  OrbitControls,
   PresentationControls,
   useGLTF,
   Text,
@@ -73,16 +72,6 @@ function Laptop({
       </primitive>
     </object3D>
   )
-}
-
-function randomColor(alpha: boolean = false): string {
-  return alpha
-    ? `rgba(${randomByte()}, ${randomByte()}, ${randomByte()}, ${Math.random()})`
-    : `rgb(${randomByte()}, ${randomByte()}, ${randomByte()})`
-}
-
-function randomByte(): number {
-  return Math.floor(Math.random() * 256)
 }
 
 export default Scene
