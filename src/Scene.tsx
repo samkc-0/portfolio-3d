@@ -1,6 +1,8 @@
 import {
+  ContactShadows,
   Environment,
   Float,
+  Html,
   OrbitControls,
   PresentationControls,
   useGLTF,
@@ -28,6 +30,7 @@ function Scene(): JSX.Element {
           </Float>
         </object3D>
       </PresentationControls>
+      <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} />
     </>
   )
 }
