@@ -10,44 +10,29 @@ import {
 import { Leva, useControls } from 'leva'
 import './Scene.css'
 
-const LAPTOP_X = -0.7
-const LAPTOP_Y = -0.3
-const LAPTOP_Z = 1
-const LAPTOP_EULER_Y = 0.5
+const BACKGROUND_COLOR = '#002626'
+const TEXT_COLOR = '#5B8C5A'
 
-function Scene({ debug = false }: { debug: boolean }): JSX.Element {
-  const controls = useControls('Laptop', {
-    laptopPosition: [LAPTOP_X, LAPTOP_Y, LAPTOP_Z],
-    laptopScale: 1,
-    laptopRotation: [0, LAPTOP_EULER_Y, 0],
-  })
-
+function Scene({ debug = false }: { debug?: boolean }): JSX.Element {
   return (
     <>
       {!debug && <Leva hidden />}
       <Environment preset="forest" />
-      <color args={['#214e34']} attach="background" />
+      <color args={[BACKGROUND_COLOR]} attach="background" />
       {/* <OrbitControls makeDefault /> */}
-      <PresentationControls
-        global
-        rotation={[0.13, 0.1, 0]}
-        polar={[-0.04, 0.2] /* limit vertical rotation */}
-        azimuth={[-1, 0.75] /* limit horizontal rotation */}
-        config={{ mass: 2, tension: 400 }}
-        snap={{ mass: 2, tension: 400 }}
-      >
-        <Float rotationIntensity={0.4}>
-          <Text name="author-name">SAMUEL CARTER</Text>
-          <Laptop
-            displayUrl="https://threejs.org/"
-            scale={debug ? controls.laptopScale : 1}
-            position={
-              debug ? controls.laptopPosition : [LAPTOP_X, LAPTOP_Y, LAPTOP_Z]
-            }
-            rotation={debug ? controls.laptopRotation : [0, LAPTOP_EULER_Y, 0]}
-          />
-        </Float>
-      </PresentationControls>
+      <Float rotationIntensity={0.4}>
+        <AuthorName first="SAMUEL" last="CARTER" />
+        <PresentationControls
+          global
+          rotation={[0.13, 0.1, 0]}
+          polar={[-0.04, 0.2] /* limit vertical rotation */}
+          azimuth={[-1, 0.75] /* limit horizontal rotation */}
+          config={{ mass: 2, tension: 400 }}
+          snap={{ mass: 2, tension: 400 }}
+        >
+          <Laptop displayUrl="https://threejs.org/" scale={1} />
+        </PresentationControls>
+      </Float>
       {/* Laptop casts a shadow on the ground: */}
       <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} />
     </>
@@ -100,6 +85,32 @@ function Laptop({
         </Html>
       </primitive>
     </object3D>
+  )
+}
+
+function AuthorName({
+  first,
+  last,
+}: {
+  first: string
+  last: string
+}): JSX.Element {
+  const color = TEXT_COLOR
+  const rotationY = -Math.PI / 2
+  const font = './fonts/ConcertOne-Regular.ttf'
+  return (
+    <group name="author-name">
+      {/* <Float> */}
+      <Text font={font} position={[3, 1.2, -1]} rotation-y={rotationY}>
+        {first}
+        <meshStandardMaterial attach="material" color={color} opacity={1} />
+      </Text>
+      <Text font={font} position={[3, 0, -1]} rotation-y={rotationY}>
+        {last}
+        <meshBasicMaterial attach="material" color={color} opacity={1} />
+      </Text>
+      {/* </Float> */}
+    </group>
   )
 }
 
