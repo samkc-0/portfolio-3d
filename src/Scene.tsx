@@ -1,17 +1,16 @@
-import { OrbitControls } from '@react-three/drei'
+import { Environment, Float, OrbitControls, useGLTF } from '@react-three/drei'
 import './Scene.css'
-import { useState } from 'react'
 
 function Scene(): JSX.Element {
-  const [color, setColor] = useState('red')
+  const laptop = useGLTF('./models/laptop.gltf')
   return (
     <>
-      <color args={['#241a1a']} attach="background" />
+      <Environment preset="forest" />
+      <color args={['#214e34']} attach="background" />
       <OrbitControls makeDefault />
-      <mesh onClick={() => setColor(randomColor())}>
-        <boxGeometry />
-        <meshBasicMaterial color={color} />
-      </mesh>
+      <Float>
+        <primitive object={laptop.scene} position-y={-1.2} />
+      </Float>
     </>
   )
 }
