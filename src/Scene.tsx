@@ -27,7 +27,7 @@ function Scene(): JSX.Element {
         <object3D name="laptop">
           <Float rotationIntensity={0.4}>
             <primitive object={laptop.scene} position-y={-1.2}>
-              <Html position-y={1.2}>
+              <Html transform position-y={1.2}>
                 <iframe
                   id="laptop-screen"
                   title="Laptop Screen"
